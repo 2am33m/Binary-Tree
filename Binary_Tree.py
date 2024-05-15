@@ -54,8 +54,68 @@ class Node():
                 return self.right.search(value)
             else:
                 return False    
+            
 
+    def find_min(self):
+        if self.left is None: 
+            return self.data    
+        else:
+           return self.left.find_min()
+
+    def find_max(self):
+        if self.right is None:
+            return self.data
+        else:
+            return self.right.find_max()
         
+
+    def calculate_sum(self):
+        sum = self.data
+
+        # Sum left nodes 
+        if self.left:
+            sum += self.left.calculate_sum()
+
+        # Sum base node
+        sum += self.data
+
+        # Sum right nodes 
+        if self.right:
+            sum += self.right.calculate_sum()
+
+        return sum
+
+    def post_order_traversal(self):
+        elements = []
+
+        # Visit the left nodes first 
+        if self.left: 
+            elements += self.left.post_order_traversal()
+
+        # Vists the right nodes     
+        if self.right:
+            elements += self.right.post_order_traversal()
+
+        #add the root node
+        elements.append(self.data)
+        
+        return elements
+    
+    def pre_order_traversal(self):
+        elements = []
+
+        # Visit the root node first
+        elements.append(self.data)
+
+        #Visit the left node first
+        if self.left:
+            elements += self.left.pre_order_traversal()
+
+        if self.right:
+            elements += self.right.pre_order_traversal()
+
+        return elements    
+
 def build_tree(elements):
     root = Node(elements[0])
 
@@ -69,7 +129,7 @@ if __name__ == "__main__":
 
     tree = build_tree(numbers)
 
-    print(tree.search(21))
+    print(tree.calculate_sum())
 
 
 
